@@ -1,0 +1,69 @@
+﻿<Window x:Class="HR_Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="HR Attendance Client" Height="422" Width="562" Name="WindowMain" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow">
+    <Grid Width="543" Height="378">
+        <GroupBox Header="Authentication" Height="134" HorizontalAlignment="Left" Name="groupBoxAuthentication" VerticalAlignment="Top" Width="274" Margin="0,24,0,0">
+            <Grid>
+                <Label Content="Select Branch" Height="28" HorizontalAlignment="Left" Name="labelSelectBranch" VerticalAlignment="Top" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="82,0,0,0" Name="comboBoxListBranch" VerticalAlignment="Top" Width="174" TabIndex="1" ToolTip="Please select your branch" />
+                <Label Content="Select User" Height="28" HorizontalAlignment="Left" Margin="0,29,0,0" Name="labelSelectUser" VerticalAlignment="Top" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="82,29,0,0" Name="comboBoxListUser" VerticalAlignment="Top" Width="174" TabIndex="2" ToolTip="Please select your name" />
+                <Label Content="Password" Height="28" HorizontalAlignment="Left" Margin="0,58,0,0" Name="labelPassword" VerticalAlignment="Top" />
+                <PasswordBox Height="23" HorizontalAlignment="Left" Margin="82,58,0,0" Name="passwordBoxPassword" VerticalAlignment="Top" Width="174" TabIndex="3" ToolTip="Please enter your chosen password" />
+                <Button Content="Authentication Access" Height="23" HorizontalAlignment="Left" Margin="82,87,0,0" Name="buttonAuthentication" VerticalAlignment="Top" Width="174" TabIndex="4" ToolTip="Click to identify your access" Click="buttonAuthentication_Click" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Attendance" Height="292" HorizontalAlignment="Left" Margin="277,25,0,0" Name="groupBoxAttendance" VerticalAlignment="Top" Width="260">
+            <Grid>
+                <Label Content="Login at" Height="28" HorizontalAlignment="Left" Margin="8,115,0,0" Name="labelLoginAt" VerticalAlignment="Top" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="69,115,0,0" Name="comboBoxCurrentLoginLocation" VerticalAlignment="Top" Width="165" TabIndex="5" />
+                <Label Content="Remark" Height="28" HorizontalAlignment="Left" Margin="8,147,0,0" Name="labelLoginRemark" VerticalAlignment="Top" />
+                <TextBox Height="75" HorizontalAlignment="Left" Margin="69,144,0,0" Name="textBoxLoginRemark" VerticalAlignment="Top" Width="165" AcceptsReturn="True" MaxLength="255" TextWrapping="Wrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" TabIndex="6" />
+                <Button Content="Login Attendance" Height="23" HorizontalAlignment="Left" Margin="69,234,0,0" Name="buttonLoginAttendance" VerticalAlignment="Top" Width="164" TabIndex="7" Click="buttonLoginAttendance_Click" />
+                <CheckBox Content="Login at Other Location" Height="16" HorizontalAlignment="Left" Margin="95,93,0,0" Name="checkBoxLoginOtherLocation" VerticalAlignment="Top" Checked="checkBoxLoginOtherLocation_Checked" Unchecked="checkBoxLoginOtherLocation_Unchecked" FontStyle="Italic" ToolTip="If the location showing is not your login location?" />
+                <Label Content="This Login will mark you at" Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" Name="labelThisCheckInLocation" VerticalAlignment="Top" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="70,62,0,0" Name="textBoxLoginLocation" VerticalAlignment="Top" Width="164" IsReadOnly="True" />
+                <Label Content="Location" Height="28" HorizontalAlignment="Left" Margin="8,62,0,0" Name="labelCheckinLocation" VerticalAlignment="Top" />
+                <Label Content="Dear" Height="28" HorizontalAlignment="Left" Margin="6,8,0,0" Name="labelDearUser" VerticalAlignment="Top" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="69,8,0,0" Name="textBoxUserAccName" VerticalAlignment="Top" Width="164" IsReadOnly="True" />
+            </Grid>
+        </GroupBox>
+        <Menu Height="23" HorizontalAlignment="Left" Name="menuMain" VerticalAlignment="Top" Width="87">
+            <MenuItem Header="_File" Name="menuItemFile">
+                <MenuItem Header="_Logout" Name="menuItemLogout" Click="menuItemLogout_Click" />
+                <Separator />
+                <MenuItem Header="E_xit" Name="menuItemExit" Click="menuItemExit_Click" />
+            </MenuItem>
+            <MenuItem Header="_Help" Name="menuItemHelp">
+                <MenuItem Header="How _to?" Name="menuItemHowTo" />
+                <Separator />
+                <MenuItem Header="_About" Name="menuItemAbout" Click="menuItemAbout_Click" />
+            </MenuItem>
+        </Menu>
+        <Label Content="Offline Mode" Height="28" HorizontalAlignment="Left" Margin="104,0,0,0" Name="labelOfflineMode" VerticalAlignment="Top" Width="93" ToolTip="This is offline mode, if you think this is an error please restart this application" />
+        <Button Content="Exit" Height="23" HorizontalAlignment="Left" Margin="441,352,0,0" Name="buttonExit" VerticalAlignment="Top" Width="75" Click="buttonExit_Click" />
+        <Label Content="Server Time" Height="28" HorizontalAlignment="Left" Margin="344,0,0,0" Name="labelServerTime" VerticalAlignment="Top" FontWeight="Bold" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="428,2,0,0" Name="textBoxServerTime" VerticalAlignment="Top" Width="89" IsReadOnly="True" IsTabStop="False" FontWeight="Bold" ToolTip="This is the time will log into your check in" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="199,5,0,0" Name="textBlockApplicationVersion" Text="Version" VerticalAlignment="Top" />
+        <GroupBox Header="Task" Height="160" HorizontalAlignment="Left" Margin="0,157,0,0" Name="groupBoxTask" VerticalAlignment="Top" Width="274" ToolTip="This is the additional selection you can do">
+            <Grid>
+                <Button Content="Today" Height="23" HorizontalAlignment="Left" Margin="19,22,0,0" Name="buttonExistingLoginTodayOnly" VerticalAlignment="Top" Width="75" Click="buttonExistingLoginTodayOnly_Click" />
+                <Label Content="Check Existing Login" Height="28" HorizontalAlignment="Left" Name="labelExistingLogin" VerticalAlignment="Top" />
+                <Button Content="This Month" Height="23" Margin="100,22,0,0" Name="buttonExistingLoginThisMonth" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75" Click="buttonExistingLoginThisMonth_Click" />
+                <Button Content="Last Month" Height="23" HorizontalAlignment="Left" Margin="181,22,0,0" Name="buttonExistingLoginLastMonth" VerticalAlignment="Top" Width="75" Click="buttonExistingLoginLastMonth_Click" />
+                <Expander Header="Last Login Information" Height="91" HorizontalAlignment="Left" Margin="4,46,0,0" Name="expanderLastLoginInformation" VerticalAlignment="Top" Width="246" IsExpanded="True" ToolTip="Expand this to show your last login information">
+                    <Grid Height="61" Width="233">
+                        <Label Content="Last login on" Height="28" HorizontalAlignment="Left" Name="labelLastLoginTime" VerticalAlignment="Top" Margin="0,6,0,0" />
+                        <TextBox Height="23" HorizontalAlignment="Left" Margin="78,6,0,0" Name="textBoxLastLoginTime" VerticalAlignment="Top" Width="144" IsReadOnly="True" IsTabStop="False" />
+                        <Label Content="Last login at" Height="28" HorizontalAlignment="Left" Margin="0,31,0,0" Name="labelLastLoginAt" VerticalAlignment="Top" />
+                        <TextBox Height="23" HorizontalAlignment="Left" Margin="78,31,0,0" Name="textBoxLastLoginLocation" VerticalAlignment="Top" Width="144" IsReadOnly="True" IsTabStop="False" />
+                    </Grid>
+                </Expander>
+            </Grid>
+        </GroupBox>
+        <Button Content="Logout" Height="23" HorizontalAlignment="Left" Margin="441,323,0,0" Name="buttonLogout" TabIndex="7" VerticalAlignment="Top" Width="75" Click="buttonLogout_Click" />
+        <Label Content="To switch other user" Height="28" HorizontalAlignment="Left" Margin="313,323,0,0" Name="labelLogoutMessage" VerticalAlignment="Top" />
+        <Label Content="To exit this application" Height="28" HorizontalAlignment="Left" Margin="301,351,0,0" Name="labelExitMessage" VerticalAlignment="Top" />
+    </Grid>
+</Window>
