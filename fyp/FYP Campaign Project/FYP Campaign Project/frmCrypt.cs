@@ -6,6 +6,8 @@ namespace ClassLibEncryption
 {
     public partial class frmCrypt : Form
     {
+        ProtectionMethod _Cryto;
+
         public frmCrypt()
         {
             InitializeComponent();
@@ -24,17 +26,17 @@ namespace ClassLibEncryption
                 {
                     using (RijndaelManaged myRijndael = new RijndaelManaged())
                     {
-                        ProtectionMethod.PasswordSalt = txtPasskey.Text;
+                        _Cryto = new ProtectionMethod(txtPasskey.Text);
                         // Encrypt
                         if (cbxMethod.SelectedIndex == 0)
-                            txtResult.Text = ProtectionMethod.Encrypt(txtInput.Text);
+                            txtResult.Text = _Cryto.Encrypt(txtInput.Text);
                         // Decrypt
                         else if (cbxMethod.SelectedIndex == 1)
-                            txtResult.Text = ProtectionMethod.Decrypt(txtInput.Text);
+                            txtResult.Text = _Cryto.Decrypt(txtInput.Text);
                         // Invalid Data
                         else
                         {
-                            txtResult.Text = "";
+                            txtResult.Text = null;
                             MessageBox.Show("Fatal Error!!!");
                         }
                     }

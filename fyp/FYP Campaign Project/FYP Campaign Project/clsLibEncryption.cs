@@ -14,19 +14,20 @@ namespace ClassLibEncryption
     /// </summary>
     public class ProtectionMethod
     {
-        public static string PasswordSalt = "default"; // default salt key, use longer salt to having strong protection, Support self define
-        private static int
-            bufferLen = 4096, // 4K Length
+        private static string PasswordSalt = "default"; //salt key, use longer salt to having strong protection
+        private static int bufferLen = 4096, // 4K Length
             bytesRead; // use for file encrypt or decrypt don't modified
 
         // Create a symmetric algorithm. 
         // We are going to use Rijndael because it is strong and available on all platforms. 
-        // You can use other algorithms, to do so substitute the next line with something like 
-        //      TripleDES alg = TripleDES.Create(); 
+        // You can use other algorithms, to do so substitute the next line with something like TripleDES alg = TripleDES.Create(); 
         private static Rijndael alg = Rijndael.Create(); // algorithms
 
+        // define salt new key
+        public ProtectionMethod(string Salt) { if (!string.IsNullOrEmpty(Salt)) { PasswordSalt = Salt; } }
+
         /// <summary>
-        ///  Encrypt a byte array into a byte array using a key and an IV 
+        /// Encrypt a byte array into a byte array using a key and an IV 
         /// </summary>
         /// <param name="RawData">byte array</param>
         /// <param name="Key">key</param>
@@ -34,10 +35,8 @@ namespace ClassLibEncryption
         /// <returns>encrypted byte[]</returns>
         public static byte[] Encrypt(byte[] RawData, byte[] Key, byte[] IV)
         {
-            if (RawData.Length == 0) throw new Exception("Cipher data cannot be null"); // If Cipher data is empty throw it
-
-            // Create a MemoryStream to accept the encrypted bytes 
-            MemoryStream ms = new MemoryStream();
+            if (RawData.Length == 0) { throw new Exception("Cipher data cannot be null"); } // If Cipher data is empty throw it
+            MemoryStream ms = new MemoryStream(); // Create a MemoryStream to accept the encrypted bytes 
 
             // Now set the key and the IV. 
             // We need the IV (Initialization Vector) because the algorithm is operating in its default 
@@ -74,12 +73,10 @@ namespace ClassLibEncryption
         /// <param name="RawData">String to encrypt</param>
         /// <param name="Password">saltkey</param>
         /// <returns>encrypted string text</returns>
-        public static string Encrypt(string RawData) // fix here add default password
+        public string Encrypt(string RawData) // fix here add default password
         {
-            if (RawData.Length == 0) throw new Exception("Cipher data cannot be null"); // If Cipher data is empty throw it
-
-            // First we need to turn the input string into a byte array. 
-            byte[] clearBytes = Encoding.Unicode.GetBytes(RawData);
+            if (RawData.Length == 0) { throw new Exception("Cipher data cannot be null"); } // If Cipher data is empty throw it
+            byte[] clearBytes = Encoding.Unicode.GetBytes(RawData); // First we need to turn the input string into a byte array. 
 
             // Then, we need to turn the password into Key and IV 
             // We are using salt to make it harder to guess our key using a dictionary attack - trying to guess a password by enumerating all possible words. 
@@ -91,13 +88,13 @@ namespace ClassLibEncryption
             // IV should always be the block size, which is by default 16 bytes (128 bit) for Rijndael. 
             // If you are using DES/TripleDES/RC2 the block size is 8 bytes and so should be the IV size. 
             // You can also read KeySize/BlockSize properties off the algorithm to find out the sizes. 
-            byte[] encryptedData = Encrypt(clearBytes, pdb.GetBytes(32), pdb.GetBytes(16));
+            byte[] eData = Encrypt(clearBytes, pdb.GetBytes(32), pdb.GetBytes(16));
 
             // Now we need to turn the resulting byte array into a string. 
             // A common mistake would be to use an Encoding class for that.
             // It does not work because not all byte values can be represented by characters. 
             // We are going to be using Base64 encoding that is designed exactly for what we are trying to do. 
-            return Convert.ToBase64String(encryptedData);
+            return Convert.ToBase64String(eData);
         }
 
         /// <summary>
@@ -107,9 +104,9 @@ namespace ClassLibEncryption
         /// <param name="RawData">String to encrypt</param>
         /// <param name="Password">saltkey</param>
         /// <returns>encrypted byte[]</returns>
-        public static byte[] Encrypt(byte[] RawData) // fix here add default password
+        public byte[] Encrypt(byte[] RawData) // fix here add default password
         {
-            if (RawData.Length == 0) throw new Exception("Cipher data cannot be null"); // If Cipher data is empty throw it
+            if (RawData.Length == 0) { throw new Exception("Cipher data cannot be null"); }// If Cipher data is empty throw it
 
             // We need to turn the password into Key and IV. 
             // We are using salt to make it harder to guess our key using a dictionary attack - trying to guess a password by enumerating all possible words. 
@@ -130,14 +127,12 @@ namespace ClassLibEncryption
         /// <param name="fileIn">input file</param>
         /// <param name="fileOut">output file</param>
         /// <param name="Password">salt key</param>
-        public static void Encrypt(string fileIn, string fileOut) // fix here add default password
+        public void Encrypt(string fileIn, string fileOut) // fix here add default password
         {
-            if (fileIn.Length == 0 || fileOut.Length == 0) throw new Exception("Cipher data cannot be null"); // If Cipher data is empty throw it
+            if (fileIn.Length == 0 || fileOut.Length == 0) { throw new Exception("Cipher data cannot be null"); } // If Cipher data is empty throw it
 
-            // First we are going to open the file streams 
-            FileStream
-                fsIn = new FileStream(fileIn, FileMode.Open, FileAccess.Read),
-                fsOut = new FileStream(fileOut, FileMode.OpenOrCreate, FileAccess.Write);
+            // First we are going to open the file streams in (read), out (write)
+            FileStream fsIn = new FileStream(fileIn, FileMode.Open, FileAccess.Read), fsOut = new FileStream(fileOut, FileMode.OpenOrCreate, FileAccess.Write);
 
             // Then we are going to derive a Key and an IV from the Password and create an algorithm 
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(PasswordSalt, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
@@ -172,10 +167,8 @@ namespace ClassLibEncryption
         /// <returns>decrypted byte[]</returns>
         public static byte[] Decrypt(byte[] cipherData, byte[] Key, byte[] IV)
         {
-            if (cipherData.Length == 0) throw new Exception("Cipher data cannot be null"); // If Cipher data is empty throw it
-
-            // Create a MemoryStream that is going to accept the decrypted bytes 
-            MemoryStream ms = new MemoryStream();
+            if (cipherData.Length == 0) { throw new Exception("Cipher data cannot be null"); } // If Cipher data is empty throw it
+            MemoryStream ms = new MemoryStream(); // Create a MemoryStream that is going to accept the decrypted bytes 
 
             // Now set the key and the IV. 
             // We need the IV (Initialization Vector) because the algorithm is operating in its default mode called CBC (Cipher Block Chaining).
@@ -189,15 +182,12 @@ namespace ClassLibEncryption
             // CryptoStreamMode.Write means that we are going to be writing data to the stream and the output will be written in the MemoryStream we have provided. 
             CryptoStream cs = new CryptoStream(ms, alg.CreateDecryptor(), CryptoStreamMode.Write);
 
-            // Write the data and make it do the decryption 
-            cs.Write(cipherData, 0, cipherData.Length);
+            cs.Write(cipherData, 0, cipherData.Length); // Write the data and make it do the decryption
 
-            // Close the crypto stream (or do FlushFinalBlock). 
-            // This will tell it that we have done our decryption and there is no more data coming in, and it is now a good time to remove the padding and finalize the decryption process. 
+            // Close the crypto stream (or do FlushFinalBlock). This will tell it that we have done our decryption and there is no more data coming in, and it is now a good time to remove the padding and finalize the decryption process. 
             cs.Close();
 
-            // Now get the decrypted data from the MemoryStream. 
-            // Some people make a mistake of using GetBuffer() here, which is not the right way. 
+            // Now get the decrypted data from the MemoryStream. Some people make a mistake of using GetBuffer() here, which is not the right way. 
             return (byte[])ms.ToArray();
         }
 
@@ -208,17 +198,12 @@ namespace ClassLibEncryption
         /// <param name="cipherText">encrypted text</param>
         /// <param name="Password">salt key</param>
         /// <returns>decrypted string</returns>
-        public static string Decrypt(string cipherData) // fix here add default password
+        public string Decrypt(string cipherData) // fix here add default password
         {
-            if (cipherData.Length == 0) throw new Exception("Cipher data cannot be null"); // If Cipher data is empty throw it
+            if (cipherData.Length == 0) { throw new Exception("Cipher data cannot be null"); } // If Cipher data is empty throw it
+            byte[] cipherBytes, decryptedData; // Variables
 
-            // Variables
-            byte[]
-                cipherBytes,
-                decryptedData;
-
-            // First we need to turn the input string into a byte array. We presume that Base64 encoding was used 
-            cipherBytes = Convert.FromBase64String(cipherData);
+            cipherBytes = Convert.FromBase64String(cipherData); // First we need to turn the input string into a byte array. We presume that Base64 encoding was used 
 
             // Then, we need to turn the password into Key and IV. We are using salt to make it harder to guess our key using a dictionary attack - trying to guess a password by enumerating all possible words. 
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(PasswordSalt, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
@@ -245,9 +230,9 @@ namespace ClassLibEncryption
         /// <param name="cipherText">encrypted text</param>
         /// <param name="Password">salt key</param>
         /// <returns>decrypted byte[]</returns>
-        public static byte[] Decrypt(byte[] cipherData) // fix here add default password
+        public byte[] Decrypt(byte[] cipherData) // fix here add default password
         {
-            if (cipherData.Length == 0) throw new Exception("Cipher data cannot be null"); // If Cipher data is empty throw it
+            if (cipherData.Length == 0) { throw new Exception("Cipher data cannot be null"); } // If Cipher data is empty throw it
 
             // We need to turn the password into Key and IV. 
             // We are using salt to make it harder to guess our key using a dictionary attack - trying to guess a password by enumerating all possible words. 
@@ -268,14 +253,12 @@ namespace ClassLibEncryption
         /// <param name="fileIn">input file</param>
         /// <param name="fileOut">output file</param>
         /// <param name="Password">salt key</param>
-        public static void Decrypt(string fileIn, string fileOut) // fix here add default password
+        public void Decrypt(string fileIn, string fileOut) // fix here add default password
         {
-            if (fileIn.Length == 0 || fileOut.Length == 0) throw new Exception("Cipher data cannot be null"); // If Cipher data is empty throw it
+            if (fileIn.Length == 0 || fileOut.Length == 0) { throw new Exception("Cipher data cannot be null"); } // If Cipher data is empty throw it
 
-            // First we are going to open the file streams 
-            FileStream
-                fsIn = new FileStream(fileIn, FileMode.Open, FileAccess.Read),
-                fsOut = new FileStream(fileOut, FileMode.OpenOrCreate, FileAccess.Write);
+            // First we are going to open the file streams, in (read), out (write)
+            FileStream fsIn = new FileStream(fileIn, FileMode.Open, FileAccess.Read), fsOut = new FileStream(fileOut, FileMode.OpenOrCreate, FileAccess.Write);
 
             // Then we are going to derive a Key and an IV from the Password and create an algorithm 
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(PasswordSalt, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });

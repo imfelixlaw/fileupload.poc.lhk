@@ -49,5 +49,18 @@ namespace FYP_Campaign_Project
             }
         }
 
+        private void FetchEventList()
+        {
+            string sql  = @"SELECT e.`event_title`, e.`event_datetime`
+                            FROM `cms_event` e
+                            INNER JOIN `cms_users` u ON u.`iduser` = e.`fkiduser`
+                            ORDER BY e.`idevent` DESC;";
+            Program.myReader = Program._MySQL.MySQLExecuteReader(sql);
+            while (Program.myReader.Read())
+            {
+
+            }
+        }
+
     }
 }

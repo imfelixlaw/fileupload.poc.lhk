@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Data;
-using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace FYP_Campaign_Project
 {
@@ -19,11 +21,10 @@ namespace FYP_Campaign_Project
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // close this MDI
-            this.Close();
-            // start new login form
+            this.Close(); // close this MDI
+            // start new login form as new thread
             Thread newLoginFrm = new Thread(new ThreadStart(ThreadProc));
-            newLoginFrm.Start();
+            newLoginFrm.Start(); // open the login form
         }
 
         private static void ThreadProc()
@@ -33,8 +34,7 @@ namespace FYP_Campaign_Project
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAboutBox about = new frmAboutBox();
-            about.MdiParent = this;
+            frmAboutBox about = new frmAboutBox(); // show about from
             about.ShowDialog();
         }
 
@@ -43,6 +43,13 @@ namespace FYP_Campaign_Project
             frmListEvent ListEvent = new frmListEvent();
             ListEvent.MdiParent = this;
             ListEvent.Show();
+        }
+
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmUpdate Update = new frmUpdate();
+            Update.MdiParent = this;
+            Update.Show();
         }
     }
 }

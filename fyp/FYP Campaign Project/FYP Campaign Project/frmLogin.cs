@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 // Class Encryption
 using ClassLibEncryption;
-using ClassLogFunction;
+using ClassLibLog;
 
 namespace FYP_Campaign_Project
 {
@@ -107,7 +107,7 @@ namespace FYP_Campaign_Project
             try
             {
                 // verify
-                Program.myReader = Program._MySQL.MySQLExecuteReader(string.Format(@"SELECT `iduser`, `status`, `permission` FROM `cms_users` WHERE `username` = '{0}' AND `password` = '{1}';", txtUsername.Text, ProtectionMethod.Encrypt(txtPassword.Text)));
+                Program.myReader = Program._MySQL.MySQLExecuteReader(string.Format(@"SELECT `iduser`, `status`, `permission` FROM `cms_users` WHERE `username` = '{0}' AND `password` = '{1}';", txtUsername.Text, Program._Crypto.Encrypt(txtPassword.Text)));
                 while (Program.myReader.Read())
                 {
                     Program.__UserID = int.Parse(string.Format("{0}", Program.myReader.GetValue(0)));
@@ -160,7 +160,7 @@ namespace FYP_Campaign_Project
                 resetVar();
 
                 // Clear old entries
-                Program._MySQL.MySQLExecuteNonQuery(@"DELETE FROM `cms_loginfail` WHERE `datetime` < DATE_SUB(NOW(), INTERVAL 15 MINUTE);");
+                Program._MySQL.MySQLExecuteNonQuery(string.Format(@"DELETE FROM `cms_loginfail` WHERE `datetime` < DATE_SUB(NOW(), INTERVAL {0} MINUTE);", Program._LoginFailBlock));
                 if (fetchFail() >= Program._LoginFailLimit) throw new Exception("Fail login count limit exceed.\nPlease Wait another 15 min.");
                 // create failsafe
                 Program._MySQL.MySQLExecuteNonQuery(string.Format(@"INSERT IGNORE INTO `cms_loginfail` SET `ip` = '{0}', `datetime` = NOW();", ip));
