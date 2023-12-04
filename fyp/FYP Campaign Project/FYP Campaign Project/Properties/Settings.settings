@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FYP_Campaign_Project.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MySQL_Host" Type="System.String" Scope="User">
+      <Value Profile="(Default)">A611YRRQ90zVuVygqMagl/O1kDWRyBdeQyZJEomZlqI=</Value>
+    </Setting>
+    <Setting Name="MySQL_Username" Type="System.String" Scope="User">
+      <Value Profile="(Default)">7/K93P2WuMadeXsIYjWdA4WDdEIxpglppHcvxTCeJ/4=</Value>
+    </Setting>
+    <Setting Name="MySQL_Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NSQx+wDxwZJK351IScI/sQ==</Value>
+    </Setting>
+    <Setting Name="MySQL_Table" Type="System.String" Scope="User">
+      <Value Profile="(Default)">uniqueone_c88</Value>
+    </Setting>
+    <Setting Name="DebugMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ErrorMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="WriteLogFile" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LogFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Logs</Value>
+    </Setting>
+    <Setting Name="LoginFailLimit" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
