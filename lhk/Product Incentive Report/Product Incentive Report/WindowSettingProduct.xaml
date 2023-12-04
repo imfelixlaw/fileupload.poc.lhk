@@ -1,0 +1,25 @@
+﻿<Window x:Class="Product_Incentive_Report.WindowSettingProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Product Setting" Height="322" Width="568" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Closed="Window_Closed">
+    <Grid Height="285" Width="546">
+        <Label Content="Product Group" Height="28" HorizontalAlignment="Left" Name="labelProductGroup" VerticalAlignment="Top" FontWeight="Bold" />
+        <Label Content="Product List" Height="28" HorizontalAlignment="Left" Margin="255,0,0,0" Name="labelProductList" VerticalAlignment="Top" FontWeight="Bold" />
+        <ListBox  ItemsSource="{Binding}" Height="127" HorizontalAlignment="Left" Margin="255,23,0,0" Name="listBoxProductNotInGroup" VerticalAlignment="Top" Width="224" />
+        <TextBlock Height="36" HorizontalAlignment="Left" Margin="138,23,0,0" Name="textBlockNotInGroup" Text="Product not belong to any product group" VerticalAlignment="Top" TextWrapping="Wrap" Width="111" />
+        <TextBlock Height="14" HorizontalAlignment="Left" Margin="138,156,0,0" Name="textBlockInGroup" Text="Product in" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" />
+        <Button Background="Transparent" BorderBrush="{x:Null}" Height="47" HorizontalAlignment="Left" Margin="485,103,0,0" Name="buttonAddToGroup" Padding="0,0,0,0" ToolTip="Add to outlet group" VerticalAlignment="Top" Width="49" Click="buttonAddToGroup_Click">
+            <Image Height="32" Source="/Product%20Incentive%20Report;component/Artwork/3D-Arrow-Down-32.png" Width="32" />
+        </Button>
+        <Button Background="Transparent" BorderBrush="{x:Null}" Height="47" HorizontalAlignment="Left" Margin="485,156,0,0" Name="buttonRemoveFromGroup" Padding="0,0,0,0" ToolTip="Remove from outlet group" VerticalAlignment="Top" Width="49" Click="buttonRemoveFromGroup_Click">
+            <Image Height="32" Source="/Product%20Incentive%20Report;component/Artwork/3D-Arrow-Up-32.png" Width="32" />
+        </Button>
+        <TextBlock FontWeight="Bold" Foreground="Red" Height="75" HorizontalAlignment="Left" Margin="144,174,0,0" Name="textBlockGroupName" Text="[select group]" TextWrapping="Wrap" VerticalAlignment="Top" Width="105" />
+        <ListBox ItemsSource="{Binding}" Height="93" HorizontalAlignment="Left" Margin="255,156,0,0" Name="listBoxProductInGroup" VerticalAlignment="Top" Width="224" />
+        <Button Content="+" Height="23" HorizontalAlignment="Left" Margin="12,255,0,0" Name="buttonNewGroup" ToolTip="Create new outlet group" VerticalAlignment="Top" Width="23" Click="buttonNewGroup_Click" />
+        <Button Content="-" Height="23" HorizontalAlignment="Left" Margin="41,255,0,0" Name="buttonDeleteGroup" ToolTip="Remove selected outlet group" VerticalAlignment="Top" Width="23" Click="buttonDeleteGroup_Click" />
+        <Button Content="A" Height="23" HorizontalAlignment="Left" Margin="70,255,0,0" Name="buttonRename" ToolTip="Rename selected outlet group" VerticalAlignment="Top" Width="23" Click="buttonRename_Click" />
+        <Button Content="OK" Height="23" HorizontalAlignment="Left" Margin="404,255,0,0" Name="buttonOK" VerticalAlignment="Top" Width="75" Click="buttonOK_Click" IsCancel="True" />
+        <ListBox ItemsSource="{Binding}" Height="226" HorizontalAlignment="Left" Margin="12,23,0,0" Name="listBoxProductGroup" VerticalAlignment="Top" Width="120" SelectionChanged="listBoxProductGroup_SelectionChanged" />
+    </Grid>
+</Window>
