@@ -6,11 +6,9 @@ using Felix.Library.Common.OSInfo;
 
 namespace Felix.Library.Common.Log
 {
-    class CommonLog
+    public class CommonLog : CommonOSInfo
     {
         // Variable -- start
-        private Common COMMON = new Common();
-        private CommonOSInfo OSINFO = new CommonOSInfo();
         // Please don't change this section if you not sure what is it, TQ.
         private StreamWriter LogFileWriter = null; // Log File
         private string LogFilePath = null; // Log file Path
@@ -21,11 +19,11 @@ namespace Felix.Library.Common.Log
         private string NormalHeader { get { return null; } } // Error Header
         private string ErrorHeader { get { return "[Error] "; } } // Error Header
         private string DebugHeader { get { return "[Debug] "; } } // Debug Header
-        public static int Error { get { return 1; } } // error code
-        public static int Debug { get { return 2; } } // debug code
+        private static int Error { get { return 1; } } // error code
+        private static int Debug { get { return 2; } } // debug code
 
         // User changable section, change only if you know what it mean
-        public bool EnvironmentData = true; // store environment data if on
+        private bool EnvironmentData = true; // store environment data if on
         private string LogEntry = "[" + DateTime.Now.ToString() + "] {0}{1}..." + Environment.NewLine, // Log Format
             LogFileName = "Log-" + DateTime.Now.ToString("yyyyMMdd") + ".txt"; // Log file Name
         // Variable -- end
@@ -37,9 +35,8 @@ namespace Felix.Library.Common.Log
         /// <param name="_debug">Debug Mode On?</param>
         /// <param name="_writeFile">Write to log file?</param>
         /// <param name="_logPath">set log folder</param>
-        public CommonLog(bool _error, bool _debug, bool _writeFile, string _logPath = null, bool enable = true)
+        public CommonLog(bool _error, bool _debug, bool _writeFile, string _logPath = null)
         {
-            if (!enable) { return; } // if the LogFunction is not enabled
             this.DebugMode = _debug; // set debug mode
             this.ErrorMode = _error; // set error mode
             this.WriteToFile = _writeFile; // set write to file mode
@@ -52,7 +49,7 @@ namespace Felix.Library.Common.Log
                 this.Log(@"Machine name : " + Environment.MachineName, Debug);
                 this.Log(@"Domain name : " + Environment.UserDomainName, Debug);
                 this.Log(@"User name : " + Environment.UserName, Debug);
-                this.Log(@"Operating System : " + OSINFO.getOSInfo(), Debug);
+                this.Log(@"Operating System : " + getOSInfo(), Debug);
             } // return running environment data
         }
 

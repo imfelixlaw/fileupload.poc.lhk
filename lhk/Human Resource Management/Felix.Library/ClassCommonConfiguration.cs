@@ -165,8 +165,7 @@ namespace Felix.Library.Common.Configuration
         {
             try
             {
-                if (b.ToLower() == "true") { return true; }
-                return false;
+                return (b.ToLower() == "true");
             }
             catch { return false; }
         }

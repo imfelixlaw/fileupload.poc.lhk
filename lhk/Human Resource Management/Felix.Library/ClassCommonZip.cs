@@ -9,9 +9,8 @@ namespace Felix.Library.Common.Zip
     /// IonicZip Function
     /// Currently Support Extract Only
     /// </summary>
-    class CommonZip
+    public class CommonZip : CommonIO
     {
-        private CommonIO COMMONIO = new CommonIO();
         private static string TargetDirectory = null, TargetFile = null;
         private static bool Init = false;
 
@@ -24,7 +23,7 @@ namespace Felix.Library.Common.Zip
         {
             try
             {
-                if (!COMMONIO.ExistDirectory(Path)) { throw new Exception("IonicZip :: Path Not Found"); }
+                if (!ExistDirectory(Path)) { throw new Exception("IonicZip :: Path Not Found"); }
                 if (string.IsNullOrEmpty(File)) { throw new Exception("IonicZip :: Invalid File"); }
                 TargetDirectory = Path;
                 TargetFile = File;

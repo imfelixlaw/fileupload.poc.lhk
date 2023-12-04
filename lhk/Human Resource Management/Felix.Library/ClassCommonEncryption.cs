@@ -21,8 +21,8 @@ namespace Felix.Library.Common.Encryption
     public class CommonEncryption
     {
         private static string PasswordSalt = "default"; //salt key, use longer salt to having strong protection
-        private static int bufferLen = 4096, // 4K Length
-            bytesRead; // use for file encrypt or decrypt don't modified
+        private const int bufferLen = 4096; // 4K Length
+        private static int bytesRead; // use for file encrypt or decrypt don't modified
 
         // Create a symmetric algorithm. 
         // We are going to use Rijndael because it is strong and available on all platforms. 
@@ -30,7 +30,7 @@ namespace Felix.Library.Common.Encryption
         private static Rijndael alg = Rijndael.Create(); // algorithms
 
         // define salt new key
-        public CommonEncryption(string Salt)
+        public CommonEncryption(string Salt = null)
         {
             if (!string.IsNullOrEmpty(Salt))
             {

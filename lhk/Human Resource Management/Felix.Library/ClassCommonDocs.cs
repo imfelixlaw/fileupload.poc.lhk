@@ -7,11 +7,11 @@ using iTextSharp.text.pdf;
 
 namespace Felix.Library.Common.Docs
 {
-    class CommonPDFDocs
+    public class CommonPDFDocs
     {
         private static bool _PDFInit = false;
         private static string _PDFFileName = null;
-        Document _PDF = new Document(PageSize.A4);
+        private Document _PDF = new Document(PageSize.A4);
 
         /// <summary>
         /// create object

@@ -1,4 +1,4 @@
-/* Function List
+/* Function List [r39]
  * ==============
  * 
  * Felix.Library.Common -> Common
@@ -57,13 +57,9 @@ namespace Felix.Library.Common
         /// </summary>
         /// <param name="dateTime">dateTime</param>
         /// <returns>eg, 1400, will return 2</returns>
-        public static int GetTwelveCycleHour(DateTime dateTime)
+        public int GetTwelveCycleHour(DateTime dateTime)
         {
-            if (dateTime.Hour > 12)
-            {
-                return dateTime.Hour - 12;
-            }
-            return dateTime.Hour;
+            return (dateTime.Hour > 12) ? dateTime.Hour - 12 : dateTime.Hour;
         }
 
         /// <summary>
@@ -74,9 +70,11 @@ namespace Felix.Library.Common
         {
             try
             {
-                ServiceController service = new ServiceController(serviceName);
-                service.Start();
-                service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromMilliseconds(5000));
+                using (ServiceController service = new ServiceController(serviceName))
+                {
+                    service.Start();
+                    service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromMilliseconds(5000));
+                }
             }
             catch { throw new Exception("Service start fail"); }
         }
@@ -89,9 +87,11 @@ namespace Felix.Library.Common
         {
             try
             {
-                ServiceController service = new ServiceController(serviceName);
-                service.Stop();
-                service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromMilliseconds(5000));
+                using (ServiceController service = new ServiceController(serviceName))
+                {
+                    service.Stop();
+                    service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromMilliseconds(5000));
+                }
             }
             catch { throw new Exception("Service stop fail"); }
         }
@@ -129,8 +129,7 @@ namespace Felix.Library.Common
             if (adobe != null)
             {
                 RegistryKey acroRead = adobe.OpenSubKey("Acrobat Reader");
-                if (acroRead == null || acroRead.GetSubKeyNames() == null) { return false; }
-                return true;
+                return (acroRead == null || acroRead.GetSubKeyNames() == null) ? false : true;
             }
             return false;
         }

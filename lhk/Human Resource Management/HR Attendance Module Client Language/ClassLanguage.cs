@@ -58,6 +58,20 @@ namespace Language.Client
                 Lang.Add(new LangNode { Form = "FrmMain", Element = "buttonPunchAttendance", LangID = 1, Lang = "登记时间" });
                 Lang.Add(new LangNode { Form = "FrmMain", Element = "buttonClose", LangID = 0, Lang = "Close" });
                 Lang.Add(new LangNode { Form = "FrmMain", Element = "buttonClose", LangID = 1, Lang = "关闭" });
+
+                Lang.Add(new LangNode { Form = "FrmMain", Element = "checkBoxUnmaskPassword", LangID = 0, Lang = "Unmask Password" });
+                Lang.Add(new LangNode { Form = "FrmMain", Element = "checkBoxUnmaskPassword", LangID = 1, Lang = "显示密码" });
+
+
+                Lang.Add(new LangNode { Form = "FrmMain", Element = "ErrMsgNoBranchData", LangID = 0, Lang = "There is something wrong, no branch data is found..." });
+                Lang.Add(new LangNode { Form = "FrmMain", Element = "ErrMsgNoBranchData", LangID = 1, Lang = "发现错误，没有分店资料..." });
+                Lang.Add(new LangNode { Form = "FrmMain", Element = "ErrMsgNoUserData", LangID = 0, Lang = "There is something wrong, no user data is found..." });
+                Lang.Add(new LangNode { Form = "FrmMain", Element = "ErrMsgNoUserData", LangID = 1, Lang = "发现错误，没有员工资料..." });
+                Lang.Add(new LangNode { Form = "FrmMain", Element = "ErrMsgPasswordEmpty", LangID = 0, Lang = "Password cannot be empty" });
+                Lang.Add(new LangNode { Form = "FrmMain", Element = "ErrMsgPasswordEmpty", LangID = 1, Lang = "密码不能为空" });
+                
+            
+            
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }

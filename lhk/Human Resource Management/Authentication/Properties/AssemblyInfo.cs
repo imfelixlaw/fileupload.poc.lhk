@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HR Attendance Module Client")]
-[assembly: AssemblyDescription("Part of Human Resource Management Application")]
+[assembly: AssemblyTitle("LHK Authentication")]
+[assembly: AssemblyDescription("Convert PHP mcrypt to C# AES, Required 10.8.10.8 to be exist")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Human Resource Management Application")]
+[assembly: AssemblyCompany("Lo Hong Ka")]
+[assembly: AssemblyProduct("Authentication")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
-[assembly: AssemblyTrademark("@Felix")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e1b8d39e-0d9a-4ab4-91e6-551ce09deda3")]
+[assembly: Guid("6f9eca8a-1e6b-4fd7-886b-9334fd57e1c6")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -29,5 +29,8 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
+// You can specify all the values or you can default the Build and Revision Numbers 
+// by using the '*' as shown below:
+// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

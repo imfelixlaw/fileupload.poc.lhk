@@ -20,14 +20,14 @@ using Felix.Library.Common.Network;
 
 namespace Felix.Library.Common.DB
 {
-    public class CommonDB
+    public class CommonDB : CommonNetwork
     {
         private bool LHKDB = false, _PingOnConnect = false;
-        private CommonNetwork COMMONNETWORK = new CommonNetwork();
+        //private CommonNetwork COMMONNETWORK = new CommonNetwork();
         private static MySqlConnection _conn = null;
         private static MySqlCommand _cmd = null;
         private string _ip = null;
-        public MySqlDataReader DataReader = null;
+        //private MySqlDataReader DataReader = null; // Remove due to protection
         private MySqlScript ms = null;
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Felix.Library.Common.DB
             {
                 _PingOnConnect = boolPing;
                 _ip = ip;
-                if (_PingOnConnect && _ip != null) { if (!COMMONNETWORK.PingTest(_ip)) { throw new Exception("MySQL Error(s) :: DB _connection Error"); } }
+                if (_PingOnConnect && _ip != null) { if (!PingTest(_ip)) { throw new Exception("MySQL Error(s) :: DB _connection Error"); } }
                 if (string.IsNullOrEmpty(connstr)) { throw new Exception("MySQL Error(s) :: Connection string is empty..."); }
                 _conn = new MySqlConnection(connstr);
                 _cmd = new MySqlCommand();
@@ -56,15 +56,17 @@ namespace Felix.Library.Common.DB
         /// <summary>
         /// try connect
         /// </summary>
-        public void TryConnection()
+        public bool TryConnection()
         {
             try
             {
                 if (!LHKDB) { throw new Exception("MySQL Error(s) :: Class not initialized"); }
                 if (_conn.State == ConnectionState.Open) { MySQLClose(); } // Dispose the _connection
                 _conn.Open();
+                _conn.Close();
+                return true;
             }
-            catch (Exception ex) { throw new Exception("MySQL Error(s) :: " + ex.Message); } // operation fail
+            catch { return false; } // operation fail
         
         }
 
@@ -91,7 +93,7 @@ namespace Felix.Library.Common.DB
             try
             {
                 if (!LHKDB) { throw new Exception("MySQL Error(s) :: Class not initialized"); }
-                if (_PingOnConnect && _ip != null) { if (!COMMONNETWORK.PingTest(_ip)) { throw new Exception("MySQL Error(s) :: DB Connection Error"); } }
+                if (_PingOnConnect && _ip != null) { if (!PingTest(_ip)) { throw new Exception("MySQL Error(s) :: DB Connection Error"); } }
                 if (_conn.State == ConnectionState.Open) { MySQLClose(); } // Dispose the _connection
                 _conn.Open(); // open again
                 _cmd.CommandText = SQL; // store sql query
@@ -110,7 +112,7 @@ namespace Felix.Library.Common.DB
             try
             {
                 if (!LHKDB) { return false; } // operation fail
-                if (_PingOnConnect && _ip != null) { if (!COMMONNETWORK.PingTest(_ip)) { throw new Exception("MySQL Error(s) :: DB Connection Error"); } }
+                if (_PingOnConnect && _ip != null) { if (!PingTest(_ip)) { throw new Exception("MySQL Error(s) :: DB Connection Error"); } }
                 if (_conn.State == ConnectionState.Open) { MySQLClose(); }// Dispose the _connection
                 _conn.Open(); // open again
                 _cmd.CommandText = SQL; // store sql query
@@ -130,7 +132,7 @@ namespace Felix.Library.Common.DB
             try
             {
                 if (!LHKDB) { throw new Exception("MySQL Error(s) :: Class not initialized"); }
-                if (_PingOnConnect && _ip != null) { if (!COMMONNETWORK.PingTest(_ip)) { throw new Exception("MySQL Error(s) :: DB Connection Error"); } }
+                if (_PingOnConnect && _ip != null) { if (!PingTest(_ip)) { throw new Exception("MySQL Error(s) :: DB Connection Error"); } }
                 if (_conn.State == ConnectionState.Open) { MySQLClose(); } // Dispose the _connection
                 int numRows = 0;
                 _conn.Open(); // open again
@@ -158,9 +160,9 @@ namespace Felix.Library.Common.DB
             var = var.Replace("[", "");
             var = var.Replace("]", "");
             var = var.Replace("%", "");
-            var = var.Replace("OR", ""); // did not using OR
-            var = var.Replace("SET", ""); // did not using OR
-            var = var.Replace("DROP", ""); // did not using DROP;
+            var = var.Replace(" OR ", " "); // did not using OR
+            var = var.Replace(" SET ", " "); // did not using OR
+            var = var.Replace(" DROP ", " "); // did not using DROP;
             return var;
         }
 
